@@ -40,7 +40,7 @@
 
 // peripheral objects
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET); //
-U8G2_FOR_ADAFRUIT_GFX u8g2_clock, u8g2_temp, u8g2_wlan; // Create an instance of the U8G2 font library for the clock and date
+U8G2_FOR_ADAFRUIT_GFX u8g2_clock, u8g2_temp, u8g2_maxmin, u8g2_wlan; // Create an instance of the U8G2 font library for the clock and date
 DHT dht(DHTPIN, DHTTYPE); // Create an instance of the DHT sensor
 
 // wlan login credentials
