@@ -9,6 +9,8 @@
 #include <Adafruit_SSD1306.h>
 #include <Wire.h>
 #include <Grove_Temperature_And_Humidity_Sensor.h>
+#include <WiFi.h>
+#include <time.h>
 
 #include "weatherstation.hpp"
 
@@ -35,8 +37,13 @@
 
 // ----------- global variables -------------------
 
+// peripheral objects
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET); //
 DHT dht(DHTPIN, DHTTYPE); // Create an instance of the DHT sensor
+
+// wlan login credentials
+const char* ssid     = "DIGI-N7fE";
+const char* password = "mPUbpMMcC4";
 
 // ------------- enum ---------------------
 // Enum for message types for debug messages

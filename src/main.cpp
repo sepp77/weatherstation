@@ -14,6 +14,16 @@ void setup() {
   pinMode(BUT_3, INPUT_PULLUP);
   pinMode(BUT_4, INPUT_PULLUP);
 
+  // initialize wlan connection
+  WiFi.begin(ssid, password);
+  Serial.print("Verbinde mit WLAN");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(300);
+    Serial.print(".");
+  }
+  // time configure (time zone: UTC+3)
+  configTime(3 * 3600, 0, "pool.ntp.org", "time.nist.gov");
+
   // Initialize the DHT sensor
   Wire.begin();
   dht.begin();
@@ -56,7 +66,15 @@ void loop() {
   display.print("Humidity: ");
   display.print(humidity);
   display.println(" %");
-  
+
+  // show time
+  struct tm timeinfo;
+  if (getLocalTime(&timeinfo)) {
+    display.setCursor(0, 32); // Move cursor to the next line
+    display.printf("Time: %02d:%02d:%02d", timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
+  } else {
+    debugMsg("Failed to obtain time", MSG_WARNING);
+  }
 
   display.display(); // Show the display buffer on the screen
 
