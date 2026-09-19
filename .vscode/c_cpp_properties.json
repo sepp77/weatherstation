@@ -10,6 +10,8 @@
             "includePath": [
                 "C:/Users/ef_zu/Documents/code_projects/weatherstation/include",
                 "C:/Users/ef_zu/Documents/code_projects/weatherstation/src",
+                "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/WiFi/src",
+                "C:/Users/ef_zu/Documents/code_projects/weatherstation/.pio/libdeps/dfrobot_beetle_esp32c3/U8g2_for_Adafruit_GFX/src",
                 "C:/Users/ef_zu/Documents/code_projects/weatherstation/.pio/libdeps/dfrobot_beetle_esp32c3/Grove Temperature And Humidity Sensor",
                 "C:/Users/ef_zu/Documents/code_projects/weatherstation/.pio/libdeps/dfrobot_beetle_esp32c3/Adafruit SSD1306",
                 "C:/Users/ef_zu/Documents/code_projects/weatherstation/.pio/libdeps/dfrobot_beetle_esp32c3/Adafruit GFX Library",
@@ -231,7 +233,6 @@
                 "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/USB/src",
                 "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/Update/src",
                 "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/WebServer/src",
-                "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/WiFi/src",
                 "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/WiFiClientSecure/src",
                 "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/WiFiProv/src",
                 ""
@@ -241,6 +242,8 @@
                 "path": [
                     "C:/Users/ef_zu/Documents/code_projects/weatherstation/include",
                     "C:/Users/ef_zu/Documents/code_projects/weatherstation/src",
+                    "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/WiFi/src",
+                    "C:/Users/ef_zu/Documents/code_projects/weatherstation/.pio/libdeps/dfrobot_beetle_esp32c3/U8g2_for_Adafruit_GFX/src",
                     "C:/Users/ef_zu/Documents/code_projects/weatherstation/.pio/libdeps/dfrobot_beetle_esp32c3/Grove Temperature And Humidity Sensor",
                     "C:/Users/ef_zu/Documents/code_projects/weatherstation/.pio/libdeps/dfrobot_beetle_esp32c3/Adafruit SSD1306",
                     "C:/Users/ef_zu/Documents/code_projects/weatherstation/.pio/libdeps/dfrobot_beetle_esp32c3/Adafruit GFX Library",
@@ -462,7 +465,6 @@
                     "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/USB/src",
                     "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/Update/src",
                     "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/WebServer/src",
-                    "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/WiFi/src",
                     "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/WiFiClientSecure/src",
                     "C:/Users/ef_zu/.platformio/packages/framework-arduinoespressif32@3.20011.230801/libraries/WiFiProv/src",
                     ""

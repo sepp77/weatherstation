@@ -11,6 +11,7 @@
 #include <Grove_Temperature_And_Humidity_Sensor.h>
 #include <WiFi.h>
 #include <time.h>
+#include <U8g2_for_Adafruit_GFX.h>
 
 #include "weatherstation.hpp"
 
@@ -39,6 +40,7 @@
 
 // peripheral objects
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET); //
+U8G2_FOR_ADAFRUIT_GFX u8g2_clock, u8g2_temp, u8g2_wlan; // Create an instance of the U8G2 font library for the clock and date
 DHT dht(DHTPIN, DHTTYPE); // Create an instance of the DHT sensor
 
 // wlan login credentials
