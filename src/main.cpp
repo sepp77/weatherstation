@@ -14,6 +14,10 @@ void setup() {
   pinMode(BUT_3, INPUT_PULLUP);
   pinMode(BUT_4, INPUT_PULLUP);
 
+  // Initialize the DHT sensor
+  Wire.begin();
+  dht.begin();
+
   // initialize display with the I2C addr 0x3C (for the 128x64)
   if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
     debugMsg("SSD1306 allocation failed", MSG_ERROR);
@@ -31,32 +35,28 @@ void loop() {
 
   display.clearDisplay(); // Clear the display buffer
 
+  // Read temperature and humidity from the DHT sensor
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+
+  // Check if any reads failed and exit early (to try again).
+  if (isnan(temperature) || isnan(humidity)) {
+    debugMsg("Failed to read from DHT sensor!", MSG_ERROR);
+    return;
+  }
+
+  // Display temperature and humidity on the OLED display
   display.setTextSize(1);      // Normal 1:1 pixel scale
   display.setTextColor(SSD1306_WHITE); // Draw white text
+  display.setCursor(0, 0);     // Start at top-left corner
 
-  if(digitalRead(BUT_1) == LOW){
-    debugMsg("Button 1 pressed", MSG_INFO);
-    display.setCursor(rand() % 128,rand() % 64); // Random position for demonstration
-    display.println("But 1");
-  }
-
-  if(digitalRead(BUT_2) == LOW){
-    debugMsg("Button 2 pressed", MSG_INFO);
-    display.setCursor(rand() % 128,rand() % 64); // Random position for demonstration
-    display.println("But 2");
-  }
-
-  if(digitalRead(BUT_3) == LOW){
-    debugMsg("Button 3 pressed", MSG_INFO);
-    display.setCursor(rand() % 128,rand() % 64); // Random position for demonstration
-    display.println("But 3");
-  }
-
-  if(digitalRead(BUT_4) == LOW){
-    debugMsg("Button 4 pressed", MSG_INFO);
-    display.setCursor(rand() % 128,rand() % 64); // Random position for demonstration
-    display.println("But 4");
-  }
+  display.print("Temp: ");
+  display.print(temperature);
+  display.println(" C");
+  display.print("Humidity: ");
+  display.print(humidity);
+  display.println(" %");
+  
 
   display.display(); // Show the display buffer on the screen
 

@@ -7,6 +7,8 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <Wire.h>
+#include <Grove_Temperature_And_Humidity_Sensor.h>
 
 #include "weatherstation.hpp"
 
@@ -20,6 +22,10 @@
 #define BUT_3 4
 #define BUT_4 6
 
+// DHT sensor defines
+#define DHTPIN 7     // Digital pin connected to the DHT sensor
+#define DHTTYPE DHT11   // DHT 11
+
 // display defines
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -29,20 +35,11 @@
 
 // ----------- global variables -------------------
 
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET); //
+DHT dht(DHTPIN, DHTTYPE); // Create an instance of the DHT sensor
 
-// ------------- class -----------------------
-class WeatherStation{
-    public:
-        WeatherStation();
-        ~WeatherStation();
-        void begin();
-        void update();
-        void displayData();
-    private:
-        // Add private members and methods as needed        
-};
-
+// ------------- enum ---------------------
+// Enum for message types for debug messages
 enum msgType{
     MSG_INFO,
     MSG_WARNING,
