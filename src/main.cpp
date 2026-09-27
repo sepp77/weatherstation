@@ -63,37 +63,8 @@ void loop()
   //debugMsg("Entering loop", MSG_INFO);
 
   display.clearDisplay(); // Clear the display buffer
-  char buf[16]; // Buffer for formatted strings
+  char buf[16]; // Buffer for formatted strings 
 
-  // Read temperature and humidity from the DHT sensor
-  float temperature = dht.readTemperature();
-
-  // Check if any reads failed and exit early (to try again).
-  while(isnan(temperature))
-  {
-    debugMsg("Failed to read from DHT sensor!", MSG_ERROR);
-    temperature = dht.readTemperature();
-    delay(100);
-  }
-  debugMsg(("DHT sensor read successful: " + String(temperature) + "°C").c_str(), MSG_INFO);
-  
-
-
-  // Display temperature and humidity on the OLED display
-  u8g2_temp.setCursor(0, SCREEN_HEIGHT - 10); // Cursor unten links der Baseline
-  snprintf(buf, sizeof(buf), "%.0f", temperature);
-  u8g2_temp.print(buf);
-  u8g2_temp.print("\u00B0C");
-
-  if(millis() % 10000 < 5000){ // switch between temp and humidity every 2.5 second
-    snprintf(buf, sizeof(buf), "^ %.0f", 28.0f); // Replace with actual max value
-    u8g2_maxmin.setCursor(SCREEN_WIDTH - u8g2_maxmin.getUTF8Width(buf), 58);
-  } else{
-    snprintf(buf, sizeof(buf), "v %.0f", 15.0f); // Replace with actual min value
-    u8g2_maxmin.setCursor(SCREEN_WIDTH - u8g2_maxmin.getUTF8Width(buf), 58);
-  }
-
-  u8g2_maxmin.print(buf);
 
   // show WLAN status
   long rssi = WiFi.RSSI();
@@ -110,10 +81,6 @@ void loop()
     u8g2_wlan.print("\ue222");
   }
 
-  // show thermometer symbol
-  // u8g2_wlan.setCursor(15, 13);
-  // u8g2_wlan.print("\ue01d");
-
   // show time
   struct tm timeinfo;
   if (getLocalTime(&timeinfo))
@@ -123,12 +90,17 @@ void loop()
              timeinfo.tm_hour,
              timeinfo.tm_min);
     u8g2_clock.setCursor(SCREEN_WIDTH - u8g2_clock.getUTF8Width(buf), 15);
-    u8g2_clock.print(buf);
   }
   else
   {
     debugMsg("Failed to obtain time", MSG_WARNING);
+    snprintf(buf, sizeof(buf),
+             "--:--");
+    u8g2_clock.setCursor(SCREEN_WIDTH - u8g2_clock.getUTF8Width(buf), 15);
   }
+  u8g2_clock.print(buf);
+
+
 
   display.display(); // Show the display buffer on the screen
 

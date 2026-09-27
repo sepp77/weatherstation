@@ -7,11 +7,11 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include <Wire.h>
 #include <Grove_Temperature_And_Humidity_Sensor.h>
 #include <WiFi.h>
 #include <time.h>
 #include <U8g2_for_Adafruit_GFX.h>
+#include <HTTPClient.h>
 
 #include "weatherstation.hpp"
 
@@ -35,6 +35,10 @@
 #define OLED_RESET     -1     // Reset pin # (or -1 if sharing Arduino reset pin)
 #define SCREEN_ADDRESS 0x3C   // Address of SSD1306 display
 
+// openweathermap.org API key
+#define WEATHER_API_KEY "dab44477f74001d541ec8332ceef27fa" // Replace with
+#define CITY_NAME "Danes"
+#define COUNTRY_CODE "RO"
 
 // ----------- global variables -------------------
 
@@ -42,6 +46,9 @@
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET); //
 U8G2_FOR_ADAFRUIT_GFX u8g2_clock, u8g2_temp, u8g2_maxmin, u8g2_wlan; // Create an instance of the U8G2 font library for the clock and date
 DHT dht(DHTPIN, DHTTYPE); // Create an instance of the DHT sensor
+
+// openweathermap.org API variables
+String weatherApiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + String(CITY_NAME) + "," + String(COUNTRY_CODE) + "&appid=" + String(WEATHER_API_KEY) + "&units=metric";
 
 // wlan login credentials
 const char* ssid     = "DIGI-N7fE";
@@ -56,22 +63,6 @@ enum msgType{
 };
 
 
-// ------------- function prototypes ---------------------
-void debugMsg(const char *msg, msgType type){
-    if (DEBUG){
-        switch (type){
-            case MSG_INFO:
-                Serial.print("[INFO]\t");
-                break;
-            case MSG_WARNING:
-                Serial.print("[WARNING]\t");
-                break;
-            case MSG_ERROR:
-                Serial.print("[ERROR]\t");
-                break;
-        }
-      Serial.println(msg);
-    }
-};
+
 
 #endif // MAIN_HPP
