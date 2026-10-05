@@ -10,8 +10,6 @@ U8G2_FOR_ADAFRUIT_GFX u8g2_clock, u8g2_temp, u8g2_maxmin, u8g2_wlan, u8g2_icon;
 const char *ssid = "DIGI-N7fE";
 const char *password = "mPUbpMMcC4";
 
-void drawWeatherIcon(const String &icon);
-
 void setup()
 {
   debugMsg("Entering setup", MSG_INFO);
@@ -74,101 +72,31 @@ void setup()
   display.clearDisplay();
 }
 
-int count = 64;
-
 void loop()
 {
-  // debugMsg("Entering loop", MSG_INFO);
+  debugMsg("Entering loop", MSG_INFO);
 
   display.clearDisplay(); // Clear the display buffer
-  char buf[16];           // Buffer for formatted strings
 
   // show WLAN status
-  long rssi = WiFi.RSSI();
-  int quality = 2 * (rssi + 100);
-  quality = constrain(quality, 0, 100);
   u8g2_wlan.setCursor(0, 13);
-  if (quality > 75)
-  {
-    u8g2_wlan.print("\ue21f");
-  }
-  else if (quality > 50)
-  {
-    u8g2_wlan.print("\ue220");
-  }
-  else if (quality > 25)
-  {
-    u8g2_wlan.print("\ue221");
-  }
-  else
-  {
-    u8g2_wlan.print("\ue222");
-  }
+  u8g2_wlan.print(getWlanStatus(WiFi.RSSI()));
 
   // show time
-  struct tm timeinfo;
-  if (getLocalTime(&timeinfo))
-  {
-    snprintf(buf, sizeof(buf),
-             "%02d:%02d",
-             timeinfo.tm_hour,
-             timeinfo.tm_min);
-    u8g2_clock.setCursor(SCREEN_WIDTH - u8g2_clock.getUTF8Width(buf), 15);
-  }
-  else
-  {
-    debugMsg("Failed to obtain time", MSG_WARNING);
-    snprintf(buf, sizeof(buf),
-             "--:--");
-    u8g2_clock.setCursor(SCREEN_WIDTH - u8g2_clock.getUTF8Width(buf), 15);
-  }
-  u8g2_clock.print(buf);
+  const char *timeStr = getTimeString();
+  u8g2_clock.setCursor(SCREEN_WIDTH - u8g2_clock.getUTF8Width(timeStr), 15);
+  u8g2_clock.print(timeStr);
 
   jsonBuffer = httpGETRequest(serverPath.c_str());
-  Serial.println(jsonBuffer);
   JSONVar myObject = JSON.parse(jsonBuffer);
-
   String icon = myObject["weather"][0]["icon"];
-
-  //Serial.print("JSON object = ");
-  //Serial.println(myObject);
-  Serial.print("Temperature: ");
-  Serial.println(myObject["main"]["temp"]);
-  Serial.print("Pressure: ");
-  Serial.println(myObject["main"]["pressure"]);
-  Serial.print("Humidity: ");
-  Serial.println(myObject["main"]["humidity"]);
-  Serial.print("Wind Speed: ");
-  Serial.println(myObject["wind"]["speed"]);
-  Serial.println("Weather Icon: " + icon);
+  int tempOut = myObject["main"]["temp"];
 
   u8g2_icon.setCursor(60, 55);
-  //drawWeatherIcon(icon);
-
-  u8g2_icon.write(count);
-
-  String msg = "Current icon code: " + String(count);
-
-  debugMsg(msg.c_str(), MSG_INFO);
-
-  count < 71 ? count++ : count = 64;
+  u8g2_icon.write(drawWeatherIcon(icon));
 
   display.display(); // Show the display buffer on the screen
 
   delay(2000);
 }
 
-void drawWeatherIcon(const String &icon)
-{
-  debugMsg(icon.c_str(), MSG_INFO);
-  if (icon == "01d" || icon == "01n")
-    u8g2_icon.write(69); // Sonne
-  else if (icon == "02d" || icon == "02n")
-      u8g2_icon.write(65); // Sonne + Wolke
-  else if (icon == "03d" || icon == "03n" ||
-             icon == "04d" || icon == "04n")
-      u8g2_icon.write(64); // Wolken
-  else if (icon == "09d" || icon == "09n" ||
-             icon == "10d" || icon == "10n" || icon == "11d" || icon == "11n" || icon == "13d" || icon == "13n")
-      u8g2_icon.write(67); // Regen
-}

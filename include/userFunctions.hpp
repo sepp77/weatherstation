@@ -13,5 +13,10 @@ void debugMsg(const char *msg, msgType type);
 
 String httpGETRequest(const char* serverName);
 
+const char* getWlanStatus(long rssi);
+
+const char *getTimeString();
+
+uint8_t drawWeatherIcon(const String &icon);
 
 #endif // USER_FUNCTIONS_HPP
