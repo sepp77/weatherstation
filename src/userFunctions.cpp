@@ -107,3 +107,20 @@ uint8_t drawWeatherIcon(const String &icon)
     else
         return (0); // Default icon (no icon)F
 }
+
+float getTemperature()
+{
+    float temperature = dht.readTemperature();
+
+    while (isnan(temperature))
+    {
+        debugMsg("Failed to read from DHT sensor!", MSG_ERROR);
+        return NAN; // Return NaN to indicate an error
+    }
+
+    debugMsg(
+        ("DHT sensor read successful: " + String(temperature) + "°C").c_str(),
+        MSG_INFO);
+
+    return temperature;
+}

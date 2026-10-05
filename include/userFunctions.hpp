@@ -19,4 +19,7 @@ const char *getTimeString();
 
 uint8_t drawWeatherIcon(const String &icon);
 
+float getTemperature();
+
+
 #endif // USER_FUNCTIONS_HPP

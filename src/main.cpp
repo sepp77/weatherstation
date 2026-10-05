@@ -56,9 +56,10 @@ void setup()
 
   u8g2_temp.begin(display);
   u8g2_temp.setFont(u8g2_font_osr21_tf); // define font for u8g2 (https://github.com/olikraus/u8g2/wiki/fntlist12)
+  
 
   u8g2_maxmin.begin(display);
-  u8g2_maxmin.setFont(u8g2_font_6x13_t_cyrillic);
+  u8g2_maxmin.setFont(u8g2_font_6x13_tf);
 
   u8g2_wlan.begin(display);
   // u8g2_wlan.setFont(u8g2_font_open_iconic_all_2x_t);
@@ -87,16 +88,40 @@ void loop()
   u8g2_clock.setCursor(SCREEN_WIDTH - u8g2_clock.getUTF8Width(timeStr), 15);
   u8g2_clock.print(timeStr);
 
+  // get weather data from openweathermap.org
   jsonBuffer = httpGETRequest(serverPath.c_str());
   JSONVar myObject = JSON.parse(jsonBuffer);
   String icon = myObject["weather"][0]["icon"];
   int tempOut = myObject["main"]["temp"];
+  int tempMax = myObject["daily"][0]["temp"]["max"];;
+  Serial.println("Weather data: " + jsonBuffer);
 
-  u8g2_icon.setCursor(60, 55);
+  // show weather icon
+  u8g2_icon.setCursor(SCREEN_WIDTH - 16 - 25, 53);
   u8g2_icon.write(drawWeatherIcon(icon));
+
+  // show temperature
+  u8g2_temp.setCursor(0, SCREEN_HEIGHT - 10);
+  static char buf[16];
+
+  if (millis() % 10000 < 5000){
+    snprintf(buf, sizeof(buf), "%d°C", tempOut);
+    u8g2_temp.print(buf);
+    debugMsg("outdoor Temp.", MSG_INFO);
+  }
+  else{
+    snprintf(buf, sizeof(buf), "%.0f°C", getTemperature());
+    u8g2_temp.print(buf);
+    debugMsg("sensor Temp.", MSG_INFO);
+  }
+  debugMsg(buf, MSG_INFO);
+
+  // show max temperature
+  snprintf(buf, sizeof(buf), "max %d°", tempMax);
+  u8g2_maxmin.setCursor(SCREEN_WIDTH - u8g2_maxmin.getUTF8Width(buf)-3, SCREEN_HEIGHT -1);
+  u8g2_maxmin.print(buf);
 
   display.display(); // Show the display buffer on the screen
 
-  delay(2000);
+  delay(1000); // Wait for 1 second before the next update
 }
-
