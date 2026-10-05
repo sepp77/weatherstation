@@ -11,6 +11,7 @@
 // ------------- function prototypes ---------------------
 void debugMsg(const char *msg, msgType type);
 
+String httpGETRequest(const char* serverName);
 
 
 #endif // USER_FUNCTIONS_HPP

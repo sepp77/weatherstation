@@ -12,8 +12,8 @@
 #include <time.h>
 #include <U8g2_for_Adafruit_GFX.h>
 #include <HTTPClient.h>
+#include <Arduino_JSON.h>
 
-#include "weatherstation.hpp"
 
 // ------------- user defines ---------------------
 
@@ -43,16 +43,17 @@
 // ----------- global variables -------------------
 
 // peripheral objects
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET); //
-U8G2_FOR_ADAFRUIT_GFX u8g2_clock, u8g2_temp, u8g2_maxmin, u8g2_wlan; // Create an instance of the U8G2 font library for the clock and date
-DHT dht(DHTPIN, DHTTYPE); // Create an instance of the DHT sensor
+extern Adafruit_SSD1306 display;
+extern U8G2_FOR_ADAFRUIT_GFX u8g2_clock, u8g2_temp, u8g2_maxmin, u8g2_wlan, u8g2_icon; // Create an instance of the U8G2 font library for the clock and date
+extern DHT dht; // Create an instance of the DHT sensor
 
 // openweathermap.org API variables
-String weatherApiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + String(CITY_NAME) + "," + String(COUNTRY_CODE) + "&appid=" + String(WEATHER_API_KEY) + "&units=metric";
+extern String serverPath; // API endpoint for weather data
+extern String jsonBuffer;
 
 // wlan login credentials
-const char* ssid     = "DIGI-N7fE";
-const char* password = "mPUbpMMcC4";
+extern const char* ssid;
+extern const char* password;
 
 // ------------- enum ---------------------
 // Enum for message types for debug messages
