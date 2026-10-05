@@ -21,5 +21,6 @@ uint8_t drawWeatherIcon(const String &icon);
 
 float getTemperature();
 
+int *getTempRange(const int temps[], size_t count);
 
 #endif // USER_FUNCTIONS_HPP

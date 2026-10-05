@@ -124,3 +124,28 @@ float getTemperature()
 
     return temperature;
 }
+
+struct TempRange
+{
+    float min;
+    float max;
+};
+
+int *getTempRange(const int temps[], size_t count)
+{
+    static int range[2];
+
+    range[0] = temps[0]; // min
+    range[1] = temps[0]; // max
+
+    for (size_t i = 1; i < count; i++)
+    {
+        if (temps[i] < range[0])
+            range[0] = temps[i];
+
+        if (temps[i] > range[1])
+            range[1] = temps[i];
+    }
+
+    return range;
+}

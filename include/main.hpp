@@ -40,6 +40,9 @@
 #define CITY_NAME "Danes"
 #define COUNTRY_CODE "RO"
 
+#define MIN_TEMP 0
+#define MAX_TEMP 1
+
 // ----------- global variables -------------------
 
 // peripheral objects
